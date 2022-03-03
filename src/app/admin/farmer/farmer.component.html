@@ -1,0 +1,100 @@
+
+<app-header></app-header> 
+
+<div class="">
+    <div class="row dv-row-dshbrd">
+<div class="col-md-2 dv-sidebr">
+
+<app-sidebar></app-sidebar>
+
+</div>
+<div class="col-md-10 dv-mainapp">
+    <div class="container-fluid">
+        <!-- CONTENT -->
+        <div class="row">
+          <div class="dv-headr">
+              Farmer
+          </div>
+            <div class="dv-frm">
+              <form *ngIf="token != null" [formGroup]="farmerForm" (ngSubmit)="submitForm(farmerForm.value)">
+               
+                <div class="adddata">      
+                <div class="">
+                    <div class="row dv-frm-row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Name of Farmer <small>*</small></label>
+                                <input class="form-control" type="text" placeholder="Name" formControlName="FullName">
+                            </div>
+                        </div>
+            
+                        <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Land Holds (in Hectare) <small>*</small></label>
+                                <input (keypress)="_NumberOnly($event)" type="number" min="0"  class="form-control"  placeholder="Land Holding (Ha)" formControlName="LandHolding">
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+            
+            
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Address <small>*</small></label>
+                                <input   class="form-control" type="text" placeholder="Address" formControlName="Address">
+                            </div>
+                        </div>
+            
+                        <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Phone </label>
+                                <input (keypress)="_NumberOnly($event)"  class="form-control" type="text" placeholder="Phone" formControlName="Phone">
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+            
+                    
+            
+                </div>
+                    <div class="submitbtn">
+                        <button *ngIf="token != null" class="btn btn-primary submit" [disabled]="!farmerForm.valid" >Submit</button>
+                    </div>
+                    
+                </div>
+            
+                </form>
+            </div>
+          <div class="dv-tble" >
+            <table class="table" >
+              <thead>
+                <tr>
+                  <th scope="col">Farmer</th>
+                  <th scope="col">Land Holding</th>
+                  <th scope="col">Added By </th>
+                  <th scope="col">Added Date</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let tddata of TableData">
+                  <td>{{tddata.fullName}}</td>
+                  <td>{{tddata.landHolding}}</td>
+                  <td>{{tddata.createdBy}}</td>
+                  <td>{{tddata.createdDate}}</td>
+                  <td><i class="fa fa-eye" (click)="toDetail(tddata.id)"></i>&nbsp;&nbsp;
+                    <i *ngIf="token != null" class="fa fa-edit" (click)="editData(tddata.id)"></i>&nbsp;&nbsp;
+                    <i *ngIf="token != null" class="fa fa-trash" (click)="removeItem(tddata.id)"></i></td>
+                </tr>
+              </tbody>
+              
+            </table>
+          </div>
+         
+      </div>
+    </div>
+
+</div>
+</div>
+</div>

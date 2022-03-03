@@ -1,0 +1,16 @@
+.container-fluid {
+    background-color: #101a33 !important;
+}
+.navbar-brand{
+    float: right;
+}
+.dv-lgin{color: white;background: #101a33;
+    border-radius: 8px;height: 35px;
+    padding: 7px;
+    margin: 8px; font-size: 15px;}
+.navbar a {cursor: pointer;}
+.dv-navbar{margin-bottom: 0px; border: none;}
+.toggle-bar{float: left; color: white;display: none;}
+@media  (max-width:600px) { 
+    .toggle-bar{  display: inline-block;margin-top: 17px;}
+}

@@ -1,0 +1,163 @@
+<app-header></app-header>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="dv-sidebr">
+
+      <app-sidebar></app-sidebar>
+
+    </div>
+    <div class="dv-mainapp">
+      <div class="container-fluid">
+        <!-- CONTENT -->
+        <div class="row">
+          <div class="dv-headr">
+            Fertilizer
+          </div>
+          <div class="dv-frm">
+            <form [formGroup]="detailsForm" (ngSubmit)="submitForm(detailsForm.value)">
+
+              <div class="adddata">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Select Farmer <small>*</small></label>
+                        <select type="number" class="form-control" formControlName="FarmerId">
+                          <option value="">-- Select a Farmer --</option>
+                          <option value={{farmer.id}} *ngFor="let farmer of farmerList">
+                            {{farmer.fullName}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>No of Labour <small>*</small></label>
+                        <input class="form-control" type="number" min="0" formControlName="Labourer">
+                      </div>
+
+                    </div>
+                    <div class="col-md-4">
+
+                      <div class="form-group">
+                        <label>Capacity <small>*</small></label>
+                        <input class="form-control" type="number" min="0" formControlName="Capacity">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>No of Operation <small>*</small></label>
+                        <input class="form-control" type="number" min="0" formControlName="NoOfPass">
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Material <small>*</small></label>
+                        <input class="form-control"  type="text" formControlName="Material1">
+
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Quantity(Kg) <small>*</small></label>
+                        <input class="form-control" min="0" type="number" formControlName="QtyKgPHa1">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Material  </label>
+                        <input class="form-control"  type="text" formControlName="Material2">
+
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Quantity (Kg) </label>
+                        <input class="form-control" min="0" type="number" formControlName="QtyKgPHa2">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Material </label>
+                        <input class="form-control"  type="text" formControlName="Material3">
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Quantity (Kg) </label>
+                        <input class="form-control" min="0" type="number" formControlName="QtyKgPHa3">
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+
+                      <div class="form-group">
+                        <label>Material </label>
+                        <input class="form-control" type="string" formControlName="Material4">
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Quantity (KG)</label>
+                        <input class="form-control" min="0" type="number" formControlName="QtyKgPHa4">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="submitbtn">
+                    <button class="btn btn-primary submit" [disabled]="!detailsForm.valid">Submit</button>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+          </div>
+          <div class="dv-tble">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Farmer</th>
+                  <th scope="col">Added Date</th>
+                  <th scope="col">Labour Used</th>
+                  <th scope="col">Material  </th>
+                  <th scope="col">Quantity (Kg)  </th>
+                  <th scope="col">Total Energy</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tddata of TableData">
+                  <td>{{getValue(tddata.farmerid,'farmer')}}</td>
+                  <td>{{tddata.createdDateUtc}}</td>
+                  <td>{{tddata.labourer}}</td>
+                  <td>{{tddata.material1}}</td>
+                  <td>{{tddata.qtyKgPHa1}}</td>
+                  <td>{{tddata.operationalEnergy}}</td>
+                  <td><i class="fa fa-eye" (click)="editData(tddata.id)"></i>&nbsp;&nbsp;
+                    <i class="fa fa-edit" (click)="editData(tddata.id)"></i>&nbsp;&nbsp;
+                    <i class="fa fa-trash" (click)="removeItem(tddata.id)"></i>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,115 @@
+
+<app-header></app-header> 
+
+<div class="">
+    <div class="row dv-row-dshbrd">
+<div class="dv-sidebr">
+
+<app-sidebar></app-sidebar>
+
+</div>
+<div class="dv-mainapp">
+    <div class="container-fluid">
+        <!-- CONTENT -->
+        <div class="row">
+          <div class="dv-headr">
+              Equipments
+          </div>
+            <div class="dv-frm">
+              <form [formGroup]="detailsForm" (ngSubmit)="submitForm(detailsForm.value)">
+               
+                <div class="adddata">      
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Name of Equipment <small>*</small></label>
+                                <input class="form-control" type="text" formControlName="Name">
+                            </div>
+                        </div>
+            
+                        <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Equipment Type <small>*</small></label>
+                                <input   class="form-control" type="text"  formControlName="EquipmentType">
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+            
+            
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Size</label>
+                                <input   class="form-control" type="text"  formControlName="Size">
+                            </div>
+                        </div>
+            
+                        <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Capacity <small>*</small> </label>
+                                <input (keypress)="_NumberOnly($event)"  class="form-control" type="number" min="0" formControlName="Capacity">
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Weight (Kg) <small>*</small></label>
+                              <input (keypress)="_NumberOnly($event)" min="0"  class="form-control" type="number"  formControlName="WeightKg">
+                          </div>
+                      </div>
+          
+                      <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Life (Hour) <small>*</small></label>
+                              <input (keypress)="_NumberOnly($event)" min="0"  class="form-control" type="number"  formControlName="LifeHr">
+                          </div>
+                      </div>
+                      <div class="col-md-4"></div>
+                  </div>
+                    
+            
+                </div>
+                    <div class="submitbtn">
+                        <button class="btn btn-primary submit" [disabled]="!detailsForm.valid" >Submit</button>
+                    </div>
+                    
+                </div>
+            
+                </form>
+            </div>
+          <div class="dv-tble" >
+            <table class="table" >
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Equipment Type</th>
+                  <th scope="col">Weight (kg) </th>
+                  <th scope="col">Life (hours)</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let tddata of TableData">
+                  <td>{{tddata.name}}</td>
+                  <td>{{tddata.equipmentType}}</td>
+                  <td>{{tddata.weightKG}}</td>
+                  <td>{{tddata.lifeHr}}</td>
+                  <td><i class="fa fa-eye" (click)="editData(tddata.id)"></i>&nbsp;&nbsp;
+                    <i class="fa fa-edit" (click)="editData(tddata.id)"></i>&nbsp;&nbsp;
+                    <i class="fa fa-trash" (click)="removeItem(tddata.id)"></i></td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+         
+      </div>
+    </div>
+
+</div>
+</div>
+</div>

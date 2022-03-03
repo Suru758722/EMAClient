@@ -1,0 +1,72 @@
+<div  class="admin-sidebar">
+  <div class="collapse navbar-collapse navbar-ex1-collapse dv-navbar">
+      
+      <ul class="nav nav-sidebar" id="myGroup">
+          <li [routerLink]="['/admin/dashboard']">
+              <a class="admin">
+                  <i class="fa fa-home"></i> Dashboard <span class="sr-only"></span>
+              </a>
+          </li>
+          <li *ngIf="token != null && role == 'admin'" [routerLink]="['/admin/user']">
+            <a class="admin" >
+                <i class="fa fa-user"></i> User <span class="sr-only">(current)</span>
+            </a>
+        </li>
+          <li [routerLink]="['/admin/farmer']">
+            <a class="admin" >
+                <i class="fa fa-user"></i> Farmer <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        <li *ngIf="token != null" [routerLink]="['/admin/machine']">
+            <a class="admin">
+                <i class="fa fa-truck"></i> Prime Mover <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        <li *ngIf="token != null" [routerLink]="['/admin/equipment']">
+            <a class="admin">
+                <i class="fa fa-tv"></i> Equipments <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        <li *ngIf="token != null" [routerLink]="['/admin/seedbeed']">
+            <a class="admin">
+                <i class="fa fa-cog"></i> SeedBeed <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        <li *ngIf="token != null" [routerLink]="['/admin/sowing']">
+            <a class="admin">
+                <i class="fa fa-cog"></i> Sowing <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        <li *ngIf="token != null" [routerLink]="['/admin/fertilizer']">
+            <a class="admin">
+                <i class="fa fa-cog"></i> Fertilizer <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        <li *ngIf="token != null" [routerLink]="['/admin/interculture']">
+            <a class="admin">
+                <i class="fa fa-cog"></i> InterCulture <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        <li *ngIf="token != null" [routerLink]="['/admin/plantprotection']">
+            <a class="admin">
+                <i class="fa fa-cog"></i> Plant Protection <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        <li *ngIf="token != null" [routerLink]="['/admin/irrigation']">
+            <a class="admin">
+                <i class="fa fa-cog"></i> Irrigation <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        <li *ngIf="token != null" [routerLink]="['/admin/harvest']">
+            <a class="admin">
+                <i class="fa fa-cog"></i> Harvesting <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        <li *ngIf="token != null" [routerLink]="['/admin/production']">
+            <a class="admin">
+                <i class="fa fa-cog"></i> Production <span class="sr-only">(current)</span>
+            </a>
+        </li>
+      </ul>
+  </div>
+</div>

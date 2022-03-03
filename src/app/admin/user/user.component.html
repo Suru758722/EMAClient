@@ -1,0 +1,44 @@
+<app-header></app-header>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="dv-sidebr">
+
+      <app-sidebar></app-sidebar>
+
+    </div>
+    <div class="dv-mainapp">
+      <div class="container-fluid">
+        <!-- CONTENT -->
+        <div class="row">
+          <div class="dv-headr">
+            User
+          </div>
+
+
+
+          <div class="dv-tble">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tddata of TableData">
+                  <td>{{tddata.userName}}</td>
+                  <td>  <label class="switch">
+                    <input (click)="changeStatus(tddata.id)" type="checkbox"[checked]= "tddata.status">
+                    <span class="slider round"></span>
+                  </label>  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

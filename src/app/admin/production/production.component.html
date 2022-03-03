@@ -1,0 +1,102 @@
+
+<app-header></app-header> 
+
+<div class="container-fluid">
+    <div class="row">
+<div class="dv-sidebr">
+
+<app-sidebar></app-sidebar>
+
+</div>
+<div class="dv-mainapp">
+    <div class="container-fluid">
+        <!-- CONTENT -->
+        <div class="row">
+          <div class="dv-headr">
+              Prime Mover
+          </div>
+            <div class="dv-frm">
+              <form [formGroup]="detailForm" (ngSubmit)="submitForm(detailForm.value)">
+               
+                <div class="adddata">      
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Name of Prime Mover <small>*</small></label>
+                                <select type="number" class="form-control" formControlName="FarmerId">
+                                  <option value="">-- Select a Farmer --</option>
+                                  <option value={{farmer.id}} *ngFor="let farmer of farmerList">
+                                        {{farmer.fullName}}
+                                  </option>
+                                </select>   
+                            </div>
+                        </div>
+            
+                        <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Grain Production<small>*</small></label>
+                                <input class="form-control" type="number" min="0"  formControlName="GrainProduction">
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Straw Production</label>
+                                <input   class="form-control" type="number" min="0" type="text" formControlName="StrawProduction">
+                            </div>
+                        </div>
+            
+                        <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Price<small>*</small> </label>
+                                <input  class="form-control" type="number" min="0" formControlName="Price">
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                   
+                  
+                </div>
+                    <div class="submitbtn">
+                        <button class="btn btn-primary submit" [disabled]="!detailForm.valid" >Submit</button>
+                    </div>
+                    
+                </div>
+            
+                </form>
+            </div>
+          <div class="dv-tble" >
+            <table class="table" >
+              <thead>
+                <tr>
+                  <th scope="col">Farmer</th>
+                  <th scope="col">GrainProduction</th>
+                  <th scope="col">StrawProduction</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let tddata of TableData">
+                  <td>{{getValue(tddata.farmerid,'farmer')}}</td>
+                  <td>{{tddata.grainProduction}}</td>
+                  <td>{{tddata.strawProduction}}</td>
+                  <td>{{tddata.price}}</td>
+                  <td><i class="fa fa-eye" (click)="editData(tddata.id)"></i>&nbsp;&nbsp;
+                    <i class="fa fa-edit" (click)="editData(tddata.id)"></i>&nbsp;&nbsp;
+                    <i class="fa fa-trash" (click)="removeItem(tddata.id)"></i></td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+         
+      </div>
+    </div>
+
+</div>
+</div>
+</div>

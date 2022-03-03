@@ -1,0 +1,125 @@
+<app-header></app-header>
+
+<div class="">
+  <div class="row dv-row-dshbrd">
+    <div class="col-md-2 dv-sidebr">
+
+      <app-sidebar></app-sidebar>
+
+    </div>
+    <div class="col-md-10 dv-mainapp">
+      <div class="container-fluid">
+        <!-- CONTENT -->
+        <div class="row">
+          <div class="dv-headr">
+            Prime Mover
+          </div>
+          <div class="dv-frm">
+            <form [formGroup]="machineForm" (ngSubmit)="submitForm(machineForm.value)">
+
+              <div class="adddata">
+                <div class="">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Name of Prime Mover <small>*</small></label>
+                        <input class="form-control" type="text" formControlName="Name">
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Brand Name <small>*</small></label>
+                        <input class="form-control" formControlName="BrandName">
+                      </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Model Id </label>
+                        <input class="form-control" type="text" formControlName="ModelId">
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Machine Type <small>*</small> </label>
+                        <input class="form-control" type="text" formControlName="MachineType">
+                      </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>HP </label>
+                        <input (keypress)="_NumberOnly($event)" class="form-control" min="0" type="number"
+                          formControlName="HP">
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Weight (Kg) <small>*</small></label>
+                        <input (keypress)="_NumberOnly($event)" class="form-control" min="0" type="number"
+                          formControlName="WeightKg">
+                      </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Life (Hours) <small>*</small></label>
+                        <input (keypress)="_NumberOnly($event)" class="form-control" min="0" type="number"
+                          formControlName="LifeHr">
+                      </div>
+                    </div>
+
+                  </div>
+
+
+                </div>
+                <div class="submitbtn">
+                  <button class="btn btn-primary submit" [disabled]="!machineForm.valid">Submit</button>
+                </div>
+
+              </div>
+
+            </form>
+          </div>
+          <div class="dv-tble">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Prime Mover</th>
+                  <th scope="col">Brand Name</th>
+                  <th scope="col">Weight (kg) </th>
+                  <th scope="col">Life (hours)</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tddata of TableData">
+                  <td>{{tddata.name}}</td>
+                  <td>{{tddata.brandName}}</td>
+                  <td>{{tddata.weightKg}}</td>
+                  <td>{{tddata.lifeHr}}</td>
+                  <td><i class="fa fa-eye" (click)="editData(tddata.id)"></i>&nbsp;&nbsp;
+                    <i class="fa fa-edit" (click)="editData(tddata.id)"></i>&nbsp;&nbsp;
+                    <i class="fa fa-trash" (click)="removeItem(tddata.id)"></i>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,163 @@
+
+<app-header></app-header> 
+
+<div class="container-fluid">
+    <div class="row">
+<div class="dv-sidebr">
+
+<app-sidebar></app-sidebar>
+
+</div>
+<div class="dv-mainapp">
+    <div class="container-fluid">
+        <!-- CONTENT -->
+        <div class="row">
+          <div class="dv-headr">
+              SeedBeed
+          </div>
+            <div class="dv-frm">
+              <form [formGroup]="detailsForm" (ngSubmit)="submitForm(detailsForm.value)">
+               
+                <div class="adddata">      
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Select Farmer <small>*</small></label>    
+                            <select type="number" class="form-control" formControlName="FarmerId">
+                              <option value="">-- Select a Farmer --</option>
+                              <option value={{farmer.id}} *ngFor="let farmer of farmerList">
+                                    {{farmer.fullName}}
+                              </option>
+                            </select>                            
+                        </div>
+                    </div>
+        
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Type Of Operation <small>*</small></label>                                
+                        <input class="form-control" type="text" formControlName="TypeOperation">
+                    </div>
+                        
+                    </div>
+                    <div class="col-md-4">
+                      
+                      <div class="form-group">
+                        <label>Select Prime Mover <small>*</small></label>
+                        <select type="number" class="form-control" formControlName="MachineId">
+                          <option value="">-- Select a Prime Mover --</option>
+                          <option value={{machine.id}} *ngFor="let machine of machineList">
+                                {{machine.name}}
+                          </option>
+                        </select>     
+                      </div>
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Own / Hired <small>*</small></label>
+                            <select class="form-control" formControlName="OwnHired">
+                              <option value="">-- Select --</option>
+                              <option >Own</option>
+                              <option >Hired</option>
+                            </select>   
+                          </div>
+                        </div>
+            
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Select Implement <small>*</small></label>
+                            <select type="number" class="form-control" formControlName="EquipmentId">
+                              <option value="">-- Select a Equipment --</option>
+                              <option value={{equip.id}} *ngFor="let equip of equipmentList">
+                                    {{equip.name}}
+                              </option>
+                            </select>     
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Rate <small>*</small></label>
+                              <input   class="form-control" min="0" type="number"  formControlName="Rate">
+                          </div>
+                    </div>
+            </div>
+            
+                    <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Diesel (Litre per Hour) <small>*</small> </label>
+                              <input (keypress)="_NumberOnly($event)"  class="form-control" type="number" min="0" formControlName="DieselLPH">
+                          </div>
+                        </div>
+            
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Total Labour (Driver + Labour)<small>*</small></label>
+                              <input (keypress)="_NumberOnly($event)" min="0"  class="form-control" type="number"  formControlName="DriverLabour">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                         
+                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>No of Operation <small>*</small></label>
+                          <input   class="form-control" min="0" type="number"   formControlName="NoOfPass">                           
+                        </div>
+                      </div>
+          
+                      <div class="col-md-4">
+                        
+                       
+                        </div>
+                      </div>
+                      <div class="col-md-4"></div>
+                  </div>
+                  <div class="submitbtn">
+                    <button class="btn btn-primary submit" [disabled]="!detailsForm.valid" >Submit</button>
+                </div>
+            
+                </div>
+                   
+                </form>
+            </div>
+          <div class="dv-tble" >
+            <table class="table" >
+              <thead>
+                <tr>
+                  <th scope="col">Type Of Operation</th>
+                  <th scope="col">Farmer</th>
+                  <th scope="col">Added Date</th>
+                  <th scope="col">Prime Mover Used</th>
+                  <th scope="col">Implement Used </th>
+                  <th scope="col">Total Energy</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let tddata of TableData">
+                  <td>{{tddata.typeOperation}}</td>
+                  <td>{{getValue(tddata.farmerid,'farmer')}}</td>
+                  <td>{{tddata.createdDateUtc}}</td>
+                  <td>{{getValue(tddata.machineId,'machine')}}</td>
+                  <td>{{getValue(tddata.equipmentId,'equip')}}</td>
+                  <td>{{tddata.operationalEnergy}}</td>
+                  <td><i class="fa fa-eye" (click)="editData(tddata.id)"></i>&nbsp;&nbsp;
+                    <i class="fa fa-edit" (click)="editData(tddata.id)"></i>&nbsp;&nbsp;
+                    <i class="fa fa-trash" (click)="removeItem(tddata.id)"></i></td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+         
+      </div>
+    </div>
+
+</div>
+</div>
+</div>
