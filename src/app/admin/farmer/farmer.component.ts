@@ -15,7 +15,9 @@ export class FarmerComponent implements OnInit {
   role: string = null
   farmerForm: FormGroup;
   TableData: any[] = []
-  
+  take: number = 1
+  moreExist: boolean = false
+  cropList: any[] = []
   constructor(private router: Router,private adminService: AdminService, private fb: FormBuilder) {
     this.initilizeForm()
   }
@@ -23,6 +25,7 @@ export class FarmerComponent implements OnInit {
   initilizeForm() {
     this.farmerForm = this.fb.group({
       Id: [0],
+      CropId: ['',Validators.required],
       CreatedBy: [''],
       FullName: [null, Validators.required],
       LandHolding: [null, Validators.required],
@@ -38,9 +41,15 @@ export class FarmerComponent implements OnInit {
       this.userId = decodedJWT.userId;
       this.role = decodedJWT.role;
     }
-    this.adminService.getAll('Farmer').subscribe((data) => {
-      this.TableData = data;
-      console.log(this.TableData)
+    this.adminService.getAll('Farmer?take='+this.take).subscribe((data : any) => {
+      this.TableData = data.list;
+      this.moreExist = data.exist    
+    },
+    error => {
+      console.log("error occured")
+    })
+    this.adminService.getAll('Admin/GetCrop').subscribe((data) => {
+      this.cropList = data;
     })
   }
 
@@ -77,9 +86,11 @@ export class FarmerComponent implements OnInit {
   }
   submitForm(model: any) {
     model.CreatedBy = this.userId
+    model.CropId = parseInt(model.CropId)
     this.adminService.post('Farmer', model).subscribe((data) => {
       this.initilizeForm();
-      this.TableData = data;
+      this.TableData = data.list;
+      this.moreExist = data.exist
     },
       error => {
         console.log("error occured")
@@ -89,7 +100,8 @@ export class FarmerComponent implements OnInit {
 
   removeItem(Id) {
     this.adminService.delete('Farmer', Id).subscribe((data) => {
-      this.TableData = data;
+      this.TableData = data.list;
+      this.moreExist = data.exist
     }, error => {
       console.log("error occured")
     })
@@ -98,5 +110,19 @@ export class FarmerComponent implements OnInit {
     this.router.navigate(["admin/farmer-detail"], { queryParams: { id: id } });
   }
 
+  viewMore(key){
+    if(key=='front'){
+      this.take = this.take + 1;
+    }else{
+      this.take = this.take - 1;
+    }
+    this.adminService.getAll('Farmer?take='+ this.take).subscribe((data : any) => {
+      this.TableData = data.list;
+      this.moreExist = data.exist    
+    },
+    error => {
+      console.log("error occured")
+    })
+  }
  
 }

@@ -1,291 +1,175 @@
 <app-header></app-header>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="dv-sidebr">
+<div class="">
+  <div class="row dv-row-dshbrd">
+    <div class="col-md-2 dv-sidebr">
 
       <app-sidebar></app-sidebar>
 
     </div>
-    <div class="dv-mainapp">
-      <div class="container-fluid">
+    <div class="col-md-10 dv-mainapp">
+      <div class="">
         <!-- CONTENT -->
         <div class="row">
           <div class="dv-headr">
             Farmer
           </div>
-          <div class="dv-frm">
-             
-               
-                <div class="adddata">      
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>{{farmerDetail.fullName}} </label>
-                            </div>
-                        </div>
-            
-                        <div class="col-md-4">
-                            <div class="form-group">
-                              <label>{{farmerDetail.landHolding}} </label>
-                            </div>
-                        </div>
-                        <div class="col-md-4"></div>
+          <div *ngIf="farmerDetail != null" class="dv-frm">
+            <div class="adddata">
+              <div class="">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="">
+                      <label>{{farmerDetail.fullName}} </label>
                     </div>
-            
-            
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                              <label>{{farmerDetail.address}}</label>
-                            </div>
-                        </div>
-            
-                        <div class="col-md-4">
-                            <div class="form-group">
-                              <label>{{farmerDetail.phone}} </label>
-                            </div>
-                        </div>
-                        <div class="col-md-4"></div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="">
+                      <label>{{farmerDetail.landHolding}} </label>
                     </div>
-            
-                    
-            
+                  </div>
+                  <div class="col-md-4"></div>
                 </div>
-                    
-                    
+
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="">
+                      <label>{{farmerDetail.address}}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="">
+                      <label>{{farmerDetail.phone}} </label>
+                    </div>
+                  </div>
+                  <div class="col-md-4"></div>
                 </div>
-            
+              </div>
             </div>
-            <div class="col-md-2"></div>
-            <div class="col-md-10">
+
+          </div>
+          <div class="col-md-2"></div>
+          <div class="col-md-10">
 
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="SeedBeed-tab" data-toggle="tab" href="#SeedBeed" role="tab" aria-controls="SeedBeed" aria-selected="true">SeedBeed</a>
+                <a class="nav-link active" id="SeedBeed-tab" data-toggle="tab" href="#SeedBeed" role="tab"
+                  aria-controls="SeedBeed" aria-selected="true">SeedBeed</a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link" id="Sowing-tab" data-toggle="tab" href="#Sowing" role="tab" aria-controls="Sowing" aria-selected="false">Sowing</a>
+                <a class="nav-link" id="Sowing-tab" data-toggle="tab" href="#Sowing" role="tab" aria-controls="Sowing"
+                  aria-selected="false">Sowing</a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link" id="Fertilizer-tab" data-toggle="tab" href="#Fertilizer" role="tab" aria-controls="Fertilizer" aria-selected="false">Fertilizer</a>
+                <a class="nav-link" id="Fertilizer-tab" data-toggle="tab" href="#Fertilizer" role="tab"
+                  aria-controls="Fertilizer" aria-selected="false">Fertilizer</a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link" id="InterCulture-tab" data-toggle="tab" href="#InterCulture" role="tab" aria-controls="InterCulture" aria-selected="false">InterCulture</a>
+                <a class="nav-link" id="InterCulture-tab" data-toggle="tab" href="#InterCulture" role="tab"
+                  aria-controls="InterCulture" aria-selected="false">InterCulture</a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="PlantProtection-tab" data-toggle="tab" href="#PlantProtection" role="tab" aria-controls="PlantProtection" aria-selected="true">Plant Protection</a>
+                <a class="nav-link active" id="PlantProtection-tab" data-toggle="tab" href="#PlantProtection" role="tab"
+                  aria-controls="PlantProtection" aria-selected="true">Plant Protection</a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link" id="Irrigation-tab" data-toggle="tab" href="#Irrigation" role="tab" aria-controls="Irrigation" aria-selected="false">Irrigation</a>
+                <a class="nav-link" id="Irrigation-tab" data-toggle="tab" href="#Irrigation" role="tab"
+                  aria-controls="Irrigation" aria-selected="false">Irrigation</a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link" id="Harvesting-tab" data-toggle="tab" href="#Harvesting" role="tab" aria-controls="Harvesting" aria-selected="false">Harvesting</a>
+                <a class="nav-link" id="Harvesting-tab" data-toggle="tab" href="#Harvesting" role="tab"
+                  aria-controls="Harvesting" aria-selected="false">Harvesting</a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link" id="Production-tab" data-toggle="tab" href="#Production" role="tab" aria-controls="Production" aria-selected="false">Production</a>
+                <a class="nav-link" id="Production-tab" data-toggle="tab" href="#Production" role="tab"
+                  aria-controls="Production" aria-selected="false">Production</a>
               </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                  
+
               <div class="tab-pane fade " id="SeedBeed" role="tabpanel" aria-labelledby="SeedBeed-tab">
-                <div class="dv-tble" >
-                  <table class="table" >
-                    <thead>
-                      <tr>
-                        <th scope="col">Type Of Operation</th>
-                        <th scope="col">Added Date</th>
-                        <th scope="col">Prime Mover Used</th>
-                        <th scope="col">Implement Used </th>
-                        <th scope="col">Total Energy</th>
-                      </tr>
-                    </thead>
-                    <tbody >
-                      <tr *ngFor="let tddata of sedbeedList">
-                        <td>{{tddata.typeOperation}}</td>
-                        <td>{{tddata.createdDateUtc}}</td>
-                        <td>{{getValue(tddata.machineId,'machine')}}</td>
-                        <td>{{getValue(tddata.equipmentId,'equip')}}</td>
-                        <td>{{tddata.operationalEnergy}}</td>
-                       
-                      </tr>
-                      
-                    </tbody>
-                  </table>
+                <div *ngIf="CropDetails != null && CropDetails.seedBeed.length >=1" class="dv-tble">
+                  <div class="adddata">
+                    <div class="">
+                      <div class="row">
+                        <div class="col-md-4">
+
+                          <label>{{CropDetails.seedBeed[0].typeOperation}} </label>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                          <label>{{CropDetails.seedBeed[0].machine}} </label>
+
+                        </div>
+                        <div class="col-md-4">
+                          <label>{{CropDetails.seedBeed[0].ownHired}} </label>
+
+                        </div>
+                      </div>
+
+
+                      <div class="row">
+                        <div class="col-md-4">
+
+                          <label>{{CropDetails.seedBeed[0].dieselLPH}} </label>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                          <label>{{CropDetails.seedBeed[0].fuelEnergy}} </label>
+
+
+                        </div>
+                        <div class="col-md-4">
+                          <label>{{CropDetails.seedBeed[0].rate}} </label>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
               </div>
-                 
+
               <div class="tab-pane fade" id="Sowing" role="tabpanel" aria-labelledby="Sowing-tab">
                 <div class="dv-tble">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Added Date</th>
-                        <th scope="col">Prime Mover Used</th>
-                        <th scope="col">Implement Used </th>
-                        <th scope="col">Total Energy</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let tddata of sowingList">
-                        <td>{{tddata.createdDateUtc}}</td>
-                        <td>{{getValue(tddata.machineId,'machine')}}</td>
-                        <td>{{getValue(tddata.equipmentId,'equip')}}</td>
-                        <td>{{tddata.operationalEnergy}}</td>
-                       
-                      </tr>
-      
-                    </tbody>
-                  </table>
+                  
                 </div>
-                </div>
+              </div>
               <div class="tab-pane fade" id="Fertilizer" role="tabpanel" aria-labelledby="Fertilizer-tab">
                 <div class="dv-tble">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Added Date</th>
-                        <th scope="col">Labour Used</th>
-                        <th scope="col">Material  </th>
-                        <th scope="col">Quantity (Kg)  </th>
-                        <th scope="col">Total Energy</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let tddata of fertilizerList">
-                        <td>{{getValue(tddata.farmerid,'farmer')}}</td>
-                        <td>{{tddata.createdDateUtc}}</td>
-                        <td>{{tddata.labourer}}</td>
-                        <td>{{tddata.material1}}</td>
-                        <td>{{tddata.qtyKgPHa1}}</td>
-                        <td>{{tddata.operationalEnergy}}</td>
-                       
-                      </tr>
-      
-                    </tbody>
-                  </table>
+                  
                 </div>
               </div>
               <div class="tab-pane fade" id="InterCulture" role="tabpanel" aria-labelledby="InterCulture-tab">
                 <div class="dv-tble">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Added Date</th>
-                        <th scope="col">Prime Mover Used</th>
-                        <th scope="col">Implement Used </th>
-                        <th scope="col">Total Energy</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let tddata of intercultureList">
-                        <td>{{getValue(tddata.farmerid,'farmer')}}</td>
-                        <td>{{tddata.createdDateUtc}}</td>
-                        <td>{{getValue(tddata.machineId,'machine')}}</td>
-                        <td>{{getValue(tddata.equipmentId,'equip')}}</td>
-                        <td>{{tddata.operationalEnergy}}</td>
-                        
-                      </tr>
-      
-                    </tbody>
-                  </table>
+                 
                 </div>
               </div>
               <div class="tab-pane fade" id="PlantProtection" role="tabpanel" aria-labelledby="PlantProtection-tab">
                 <div class="dv-tble">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Added Date</th>
-                        <th scope="col">Prime Mover Used</th>
-                        <th scope="col">Implement Used </th>
-                        <th scope="col">Total Energy</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let tddata of plantprotectionList">
-                        <td>{{tddata.createdDateUtc}}</td>
-                        <td>{{getValue(tddata.machineId,'machine')}}</td>
-                        <td>{{getValue(tddata.equipmentId,'equip')}}</td>
-                        <td>{{tddata.operationalEnergy}}</td>                       
-                      </tr>
-      
-                    </tbody>
-                  </table>
+                  
                 </div>
               </div>
               <div class="tab-pane fade" id="Irrigation" role="tabpanel" aria-labelledby="Irrigation-tab">
                 <div class="dv-tble">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Added Date</th>
-                        <th scope="col">Prime Mover Used</th>
-                        <th scope="col">Implement Used </th>
-                        <th scope="col">Total Energy</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let tddata of irrigationList">
-                        <td>{{getValue(tddata.farmerid,'farmer')}}</td>
-                        <td>{{tddata.createdDateUtc}}</td>
-                        <td>{{getValue(tddata.machineId,'machine')}}</td>
-                        <td>{{getValue(tddata.equipmentId,'equip')}}</td>
-                        <td>{{tddata.operationalEnergy}}</td>
-                      </tr>
-      
-                    </tbody>
-                  </table>
+                  
                 </div>
               </div>
               <div class="tab-pane fade" id="Harvesting" role="tabpanel" aria-labelledby="Harvesting-tab">
                 <div class="dv-tble">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Type Of Operation</th>
-                        <th scope="col">Added Date</th>
-                        <th scope="col">Prime Mover Used</th>
-                        <th scope="col">Implement Used </th>
-                        <th scope="col">Total Energy</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let tddata of harvestingList">
-                        <td>{{tddata.typeOperation}}</td>
-                        <td>{{tddata.createdDateUtc}}</td>
-                        <td>{{getValue(tddata.machineId,'machine')}}</td>
-                        <td>{{getValue(tddata.equipmentId,'equip')}}</td>
-                        <td>{{tddata.operationalEnergy}}</td>
-                        
-                      </tr>
-      
-                    </tbody>
-                  </table>
+                 
                 </div>
               </div>
               <div class="tab-pane fade" id="Production" role="tabpanel" aria-labelledby="Production-tab">
-                <div class="dv-tble" >
-                  <table class="table" >
-                    <thead>
-                      <tr>
-                        <th scope="col">GrainProduction</th>
-                        <th scope="col">StrawProduction</th>
-                        <th scope="col">Price</th>
-                      </tr>
-                    </thead>
-                    <tbody >
-                      <tr *ngFor="let tddata of productionList">
-                        <td>{{tddata.grainProduction}}</td>
-                        <td>{{tddata.strawProduction}}</td>
-                        <td>{{tddata.price}}</td>
-                       
-                      </tr>
-                      
-                    </tbody>
-                  </table>
+                <div class="dv-tble">
+                  
                 </div>
               </div>
             </div>

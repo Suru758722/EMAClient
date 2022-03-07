@@ -15,6 +15,7 @@ export class SeedbeedComponent implements OnInit {
   farmerList: any[] = [];
   machineList: any[] = [];
   equipmentList: any[] = [];
+  cropList: any[] = []
   constructor(private adminService: AdminService, private fb: FormBuilder) {
     this.initializeForm()
   }
@@ -22,6 +23,7 @@ export class SeedbeedComponent implements OnInit {
   initializeForm() {
     this.detailsForm = this.fb.group({
       Id: [0],
+      CropId: [''],
       FarmerId: ['',Validators.required],
       MachineId: ['', Validators.required],
       EquipmentId: ['', Validators.required],
@@ -36,11 +38,11 @@ export class SeedbeedComponent implements OnInit {
   ngOnInit() {
     this.adminService.getAll('SeedBeed').subscribe((data) => {
       this.TableData = data;
-      console.log(this.TableData)
     })
-    this.adminService.getAll('Farmer').subscribe((data) => {
-      this.farmerList = data;
+    this.adminService.getAll('Admin/GetCrop').subscribe((data) => {
+      this.cropList = data;
     })
+   
     this.adminService.getAll('Machine').subscribe((data) => {
       this.machineList = data;
     })
@@ -48,6 +50,14 @@ export class SeedbeedComponent implements OnInit {
       this.equipmentList = data;
     })
   }
+
+  getFarmer(){
+    console.log(this.detailsForm.controls.CropId)
+    this.adminService.getAll('Farmer/GetFarmerById?Id=0&cropId='+ parseInt(this.detailsForm.controls.CropId.value)).subscribe((data) => {
+      this.farmerList = data;
+    })
+  }
+
 
   editData(Id) {
     var singleRecord = this.TableData.find(x => x.id == Id)

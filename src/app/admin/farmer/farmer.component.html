@@ -9,7 +9,7 @@
 
 </div>
 <div class="col-md-10 dv-mainapp">
-    <div class="container-fluid">
+    <div class="">
         <!-- CONTENT -->
         <div class="row">
           <div class="dv-headr">
@@ -22,19 +22,29 @@
                 <div class="">
                     <div class="row dv-frm-row">
                         <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Name of Farmer <small>*</small></label>
-                                <input class="form-control" type="text" placeholder="Name" formControlName="FullName">
-                            </div>
+                          <div class="form-group">
+                            <label>Select Crop <small>*</small></label>
+                            <select type="number" class="form-control" formControlName="CropId">
+                              <option value="">-- Select a Crop --</option>
+                              <option value={{crop.id}} *ngFor="let crop of cropList">
+                                {{crop.cropName}}
+                              </option>
+                            </select>
+                          </div>
                         </div>
             
                         <div class="col-md-4">
-                            <div class="form-group">
-                              <label>Land Holds (in Hectare) <small>*</small></label>
-                                <input (keypress)="_NumberOnly($event)" type="number" min="0"  class="form-control"  placeholder="Land Holding (Ha)" formControlName="LandHolding">
-                            </div>
+                          <div class="form-group">
+                            <label>Name of Farmer <small>*</small></label>
+                            <input class="form-control" type="text" placeholder="Name" formControlName="FullName">
                         </div>
-                        <div class="col-md-4"></div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Land Holds (in Hectare) <small>*</small></label>
+                              <input (keypress)="_NumberOnly($event)" type="number" min="0"  class="form-control"  placeholder="Land Holding (Ha)" formControlName="LandHolding">
+                          </div>
+                        </div>
                     </div>
             
             
@@ -71,6 +81,7 @@
               <thead>
                 <tr>
                   <th scope="col">Farmer</th>
+                  <th scope="col">Crop Made</th>
                   <th scope="col">Land Holding</th>
                   <th scope="col">Added By </th>
                   <th scope="col">Added Date</th>
@@ -80,6 +91,7 @@
               <tbody >
                 <tr *ngFor="let tddata of TableData">
                   <td>{{tddata.fullName}}</td>
+                  <td>{{tddata.cropName}}</td>
                   <td>{{tddata.landHolding}}</td>
                   <td>{{tddata.createdBy}}</td>
                   <td>{{tddata.createdDate}}</td>
@@ -90,6 +102,11 @@
               </tbody>
               
             </table>
+            <div>
+              <button (click)="viewMore('front')" [disabled] = "!moreExist" style="float: right;" class="fa fa-arrow-circle-right" aria-hidden="true"></button>
+              <button (click)="viewMore('back')"  [disabled] = "take == 1" style="float: right;" class="fa fa-arrow-circle-left" aria-hidden="true"></button>
+           
+            </div>
           </div>
          
       </div>
