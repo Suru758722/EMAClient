@@ -115,6 +115,11 @@
 
               </tbody>
             </table>
+            <div>
+              <button (click)="viewMore('front')" [disabled] = "!moreExist" style="float: right;" class="fa fa-arrow-circle-right" aria-hidden="true"></button>
+              <button (click)="viewMore('back')"  [disabled] = "take == 1" style="float: right;" class="fa fa-arrow-circle-left" aria-hidden="true"></button>
+           
+            </div>
           </div>
 
         </div>

@@ -16,6 +16,8 @@ export class SeedbeedComponent implements OnInit {
   machineList: any[] = [];
   equipmentList: any[] = [];
   cropList: any[] = []
+  take: number = 1
+  moreExist: boolean = false
   constructor(private adminService: AdminService, private fb: FormBuilder) {
     this.initializeForm()
   }
@@ -36,8 +38,9 @@ export class SeedbeedComponent implements OnInit {
     })
   }
   ngOnInit() {
-    this.adminService.getAll('SeedBeed').subscribe((data) => {
-      this.TableData = data;
+    this.adminService.getAll('SeedBeed?take='+ this.take).subscribe((data : any) => {
+      this.TableData = data.list;
+      this.moreExist = data.exist  
     })
     this.adminService.getAll('Admin/GetCrop').subscribe((data) => {
       this.cropList = data;
@@ -49,14 +52,14 @@ export class SeedbeedComponent implements OnInit {
     this.adminService.getAll('Equipment').subscribe((data) => {
       this.equipmentList = data;
     })
-  }
-
-  getFarmer(){
-    console.log(this.detailsForm.controls.CropId)
-    this.adminService.getAll('Farmer/GetFarmerById?Id=0&cropId='+ parseInt(this.detailsForm.controls.CropId.value)).subscribe((data) => {
-      this.farmerList = data;
+    this.detailsForm.controls.CropId.valueChanges.subscribe((data) =>{
+      this.adminService.getAll('Farmer/GetFarmerById?Id=0&cropId='+ parseInt(this.detailsForm.controls.CropId.value)).subscribe((data) => {
+        this.farmerList = data;
+      })
     })
   }
+
+
 
 
   editData(Id) {
@@ -69,6 +72,7 @@ export class SeedbeedComponent implements OnInit {
       TypeOperation: singleRecord.typeOperation,
       OwnHired: singleRecord.ownHired,
       Rate: singleRecord.rate,
+      CropId: singleRecord.farmerDetail.crop.id,
       DieselLPH: singleRecord.dieselLPH,
       DriverLabour: singleRecord.driverLabour,
       NoOfPass: singleRecord.noOfPass
@@ -99,7 +103,8 @@ export class SeedbeedComponent implements OnInit {
     model.MachineId = parseInt(model.MachineId)
     model.EquipmentId = parseInt(model.EquipmentId)
     this.adminService.post('SeedBeed', model).subscribe((data) => {
-      this.TableData = data;
+      this.TableData = data.list;
+      this.moreExist = data.exist  
       this.initializeForm();
 
     },
@@ -111,19 +116,25 @@ export class SeedbeedComponent implements OnInit {
 
   removeItem(Id) {
     this.adminService.delete('SeedBeed', Id).subscribe((data) => {
-      this.TableData = data;
+      this.TableData = data.list;
+      this.moreExist = data.exist  
     }, error => {
       console.log("error occured")
     })
   }
-  getValue(id,key){
-    if(key == 'farmer' && this.farmerList.length > 0)
-    return this.farmerList.find(x => x.id == id).fullName;
-    else if(key == 'machine' && this.machineList.length > 0)
-    return this.machineList.find(x => x.id == id).name;
-    else if(key == 'equip' && this.equipmentList.length > 0)
-    return this.equipmentList.find(x => x.id == id).name;
-
+  viewMore(key){
+    if(key=='front'){
+      this.take = this.take + 1;
+    }else{
+      this.take = this.take - 1;
+    }
+    this.adminService.getAll('SeedBeed?take='+ this.take).subscribe((data : any) => {
+      this.TableData = data.list;
+      this.moreExist = data.exist    
+    },
+    error => {
+      console.log("error occured")
+    })
   }
 
 }

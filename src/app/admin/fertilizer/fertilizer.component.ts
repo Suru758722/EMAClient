@@ -15,6 +15,9 @@ export class FertilizerComponent implements OnInit {
   farmerList: any[] = [];
   machineList: any[] = [];
   equipmentList: any[] = [];
+  cropList: any[] = []
+  take: number = 1
+  moreExist: boolean = false
   constructor(private adminService: AdminService, private fb: FormBuilder) {
     this.initializeForm()
   }
@@ -22,29 +25,35 @@ export class FertilizerComponent implements OnInit {
   initializeForm() {
     this.detailsForm = this.fb.group({
       Id: [0],
+      CropId: [''],
       FarmerId: ['',Validators.required],
       Labourer: [null, Validators.required],
       Capacity: [null, Validators.required],
       NoOfPass: [null, Validators.required],
       Material1: [null, Validators.required], 
-      Material2: [null],
-      Material3: [null],
-      Material4: [null],
+      Material2: [null, Validators.required],
+      Material3: [null, Validators.required],
+      Material4: [null, Validators.required],
       QtyKgPHa1: [null, Validators.required],
-      QtyKgPHa2: [null],
-      QtyKgPHa3: [null],
-      QtyKgPHa4: [null],
+      QtyKgPHa2: [null, Validators.required],
+      QtyKgPHa3: [null, Validators.required],
+      QtyKgPHa4: [null, Validators.required],
     })
   }
   ngOnInit() {
-    this.adminService.getAll('Fertilizer').subscribe((data) => {
-      this.TableData = data;
-      console.log(this.TableData)
+    this.adminService.getAll('Fertilizer?take='+this.take).subscribe((data: any) => {
+      this.TableData = data.list;
+      this.moreExist = data.exist   
     })
-    this.adminService.getAll('Farmer').subscribe((data) => {
-      this.farmerList = data;
+   
+    this.adminService.getAll('Admin/GetCrop').subscribe((data) => {
+      this.cropList = data;
     })
-    
+    this.detailsForm.controls.CropId.valueChanges.subscribe((data) =>{
+      this.adminService.getAll('Farmer/GetFarmerById?Id=0&cropId='+ parseInt(this.detailsForm.controls.CropId.value)).subscribe((data) => {
+        this.farmerList = data;
+      })
+    })
   }
 
   editData(Id) {
@@ -63,6 +72,7 @@ export class FertilizerComponent implements OnInit {
       QtyKgPHa2: singleRecord.qtyKgPHa2,
       QtyKgPHa3: singleRecord.qtyKgPHa3,
       QtyKgPHa4: singleRecord.qtyKgPHa4,
+      CropId: singleRecord.farmerDetail.crop.id,
 
     })
   }
@@ -89,7 +99,8 @@ export class FertilizerComponent implements OnInit {
   submitForm(model: any) {
     model.FarmerId = parseInt(model.FarmerId)
     this.adminService.post('Fertilizer', model).subscribe((data) => {
-      this.TableData = data;
+      this.TableData = data.list;
+      this.moreExist = data.exist
       this.initializeForm();
 
     },
@@ -101,15 +112,26 @@ export class FertilizerComponent implements OnInit {
 
   removeItem(Id) {
     this.adminService.delete('Fertilizer', Id).subscribe((data) => {
-      this.TableData = data;
+      this.TableData = data.list;
+      this.moreExist = data.exist
     }, error => {
       console.log("error occured")
     })
   }
-  getValue(id,key){
-    if(key == 'farmer' && this.farmerList.length > 0)
-    return this.farmerList.find(x => x.id == id).fullName;
-    
-  }
 
+  viewMore(key){
+    if(key=='front'){
+      this.take = this.take + 1;
+    }else{
+      this.take = this.take - 1;
+    }
+    this.adminService.getAll('Fertilizer?take='+this.take).subscribe((data : any) => {
+      this.TableData = data.list;
+      this.moreExist = data.exist    
+    },
+    error => {
+      console.log("error occured")
+    })
+  
+  }
 }

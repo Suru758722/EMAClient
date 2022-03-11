@@ -12,7 +12,9 @@ export class ProductionComponent implements OnInit {
   detailForm: FormGroup;
   TableData: any[] = []
   farmerList: any[] = [];
-
+  cropList: any[] = []
+  take: number = 1
+  moreExist: boolean = false
   constructor(private adminService: AdminService, private fb: FormBuilder) {
     this.initializeForm()
   }
@@ -20,6 +22,7 @@ export class ProductionComponent implements OnInit {
   initializeForm() {
     this.detailForm = this.fb.group({
       Id: [0],
+      CropId: [''],
       FarmerId: ['', Validators.required],
       GrainProduction: [null, Validators.required],
       StrawProduction: [null, Validators.required],
@@ -28,12 +31,17 @@ export class ProductionComponent implements OnInit {
     })
   }
   ngOnInit() {
-    this.adminService.getAll('Production').subscribe((data) => {
-      this.TableData = data;
-      console.log(this.TableData)
+    this.adminService.getAll('Production?take='+ this.take).subscribe((data : any) => {
+      this.TableData = data.list;
+      this.moreExist = data.exist
     })
-    this.adminService.getAll('Farmer').subscribe((data) => {
-      this.farmerList = data;
+    this.adminService.getAll('Admin/GetCrop').subscribe((data) => {
+      this.cropList = data;
+    })
+    this.detailForm.controls.CropId.valueChanges.subscribe((data) =>{
+      this.adminService.getAll('Farmer/GetFarmerById?Id=0&cropId='+ parseInt(this.detailForm.controls.CropId.value)).subscribe((data) => {
+        this.farmerList = data;
+      })
     })
   }
 
@@ -45,6 +53,7 @@ export class ProductionComponent implements OnInit {
       GrainProduction: singleRecord.grainProduction,
       StrawProduction: singleRecord.strawProduction,
       Price: singleRecord.price,
+      CropId: singleRecord.farmerDetail.crop.id
 
     })
   }
@@ -71,7 +80,8 @@ export class ProductionComponent implements OnInit {
   submitForm(model: any) {
     model.FarmerId = parseInt(model.FarmerId)
     this.adminService.post('Production', model).subscribe((data) => {
-      this.TableData = data;
+      this.TableData = data.list;
+      this.moreExist = data.exist
       this.initializeForm();
 
     },
@@ -83,14 +93,25 @@ export class ProductionComponent implements OnInit {
 
   removeItem(Id) {
     this.adminService.delete('Production', Id).subscribe((data) => {
-      this.TableData = data;
+      this.TableData = data.list;
+      this.moreExist = data.exist
     }, error => {
       console.log("error occured")
     })
   }
-  getValue(id, key) {
-    if (key == 'farmer' && this.farmerList.length > 0)
-      return this.farmerList.find(x => x.id == id).fullName;
+  viewMore(key){
+    if(key=='front'){
+      this.take = this.take + 1;
+    }else{
+      this.take = this.take - 1;
+    }
+    this.adminService.getAll('Production?take='+ this.take).subscribe((data : any) => {
+      this.TableData = data.list;
+      this.moreExist = data.exist    
+    },
+    error => {
+      console.log("error occured")
+    })
   }
 
 }

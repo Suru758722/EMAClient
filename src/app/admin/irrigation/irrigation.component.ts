@@ -14,6 +14,9 @@ export class IrrigationComponent implements OnInit {
   farmerList: any[] = [];
   machineList: any[] = [];
   equipmentList: any[] = [];
+  cropList: any[] = []
+  take: number = 1
+  moreExist: boolean = false
   constructor(private adminService: AdminService, private fb: FormBuilder) {
     this.initializeForm()
   }
@@ -21,6 +24,7 @@ export class IrrigationComponent implements OnInit {
   initializeForm() {
     this.detailsForm = this.fb.group({
       Id: [0],
+      CropId: [''],
       FarmerId: ['',Validators.required],
       MachineId: ['', Validators.required],
       EquipmentId: ['', Validators.required],
@@ -32,18 +36,23 @@ export class IrrigationComponent implements OnInit {
     })
   }
   ngOnInit() {
-    this.adminService.getAll('Irrigation').subscribe((data) => {
-      this.TableData = data;
-      console.log(this.TableData)
+    this.adminService.getAll('Irrigation?take='+this.take).subscribe((data : any) => {
+      this.TableData = data.list;
+      this.moreExist = data.exist   
     })
-    this.adminService.getAll('Farmer').subscribe((data) => {
-      this.farmerList = data;
+    this.adminService.getAll('Admin/GetCrop').subscribe((data) => {
+      this.cropList = data;
     })
     this.adminService.getAll('Machine').subscribe((data) => {
       this.machineList = data;
     })
     this.adminService.getAll('Equipment').subscribe((data) => {
       this.equipmentList = data;
+    })
+    this.detailsForm.controls.CropId.valueChanges.subscribe((data) =>{
+      this.adminService.getAll('Farmer/GetFarmerById?Id=0&cropId='+ parseInt(this.detailsForm.controls.CropId.value)).subscribe((data) => {
+        this.farmerList = data;
+      })
     })
   }
 
@@ -58,7 +67,9 @@ export class IrrigationComponent implements OnInit {
       OwnHired: singleRecord.ownHired,
       EleckWh: singleRecord.eleckWh,
       DriverLabour: singleRecord.operatorLabour,
-      NoOfPass: singleRecord.noOfPass
+      NoOfPass: singleRecord.noOfPass,
+      CropId: singleRecord.farmerDetail.crop.id
+
     })
   }
 
@@ -86,7 +97,8 @@ export class IrrigationComponent implements OnInit {
     model.MachineId = parseInt(model.MachineId)
     model.EquipmentId = parseInt(model.EquipmentId)
     this.adminService.post('Irrigation', model).subscribe((data) => {
-      this.TableData = data;
+      this.TableData = data.list;
+      this.moreExist = data.exist   
       this.initializeForm();
 
     },
@@ -98,18 +110,24 @@ export class IrrigationComponent implements OnInit {
 
   removeItem(Id) {
     this.adminService.delete('Irrigation', Id).subscribe((data) => {
-      this.TableData = data;
+      this.TableData = data.list;
+      this.moreExist = data.exist   
     }, error => {
       console.log("error occured")
     })
   }
-  getValue(id,key){
-    if(key == 'farmer' && this.farmerList.length > 0)
-    return this.farmerList.find(x => x.id == id).fullName;
-    else if(key == 'machine' && this.machineList.length > 0)
-    return this.machineList.find(x => x.id == id).name;
-    else if(key == 'equip' && this.equipmentList.length > 0)
-    return this.equipmentList.find(x => x.id == id).name;
-
+  viewMore(key){
+    if(key=='front'){
+      this.take = this.take + 1;
+    }else{
+      this.take = this.take - 1;
+    }
+    this.adminService.getAll('Irrigation?take='+this.take).subscribe((data : any) => {
+      this.TableData = data.list;
+      this.moreExist = data.exist    
+    },
+    error => {
+      console.log("error occured")
+    })
   }
 }

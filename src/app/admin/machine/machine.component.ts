@@ -11,6 +11,8 @@ export class MachineComponent implements OnInit {
 
   machineForm: FormGroup;
    TableData: any[] = []
+   take: number = 1
+   moreExist: boolean = false
   constructor(private adminService: AdminService,private fb: FormBuilder) { 
     this.initializeForm()
   }
@@ -28,9 +30,9 @@ export class MachineComponent implements OnInit {
       },)
   }
   ngOnInit() {
-    this.adminService.getAll('Machine').subscribe((data) =>{
-        this.TableData = data;
-        console.log(this.TableData)
+    this.adminService.getAll('Machine?take='+ this.take).subscribe((data: any) =>{
+      this.TableData = data.list;
+      this.moreExist = data.exist    
     })
   }
 
@@ -70,7 +72,8 @@ export class MachineComponent implements OnInit {
     submitForm(model: any){
       
         this.adminService.post('Machine',model).subscribe((data) =>{
-          this.TableData = data;
+          this.TableData = data.list;
+      this.moreExist = data.exist    
           this.initializeForm();
 
       },
@@ -82,10 +85,24 @@ export class MachineComponent implements OnInit {
 
         removeItem(Id) {
           this.adminService.delete('Machine',Id).subscribe((data) =>{
-            this.TableData = data;
+            this.TableData = data.list;
+            this.moreExist = data.exist    
         },error =>{
           console.log("error occured")
         })
         }
-
+        viewMore(key){
+          if(key=='front'){
+            this.take = this.take + 1;
+          }else{
+            this.take = this.take - 1;
+          }
+          this.adminService.getAll('Machine?take='+ this.take).subscribe((data : any) => {
+            this.TableData = data.list;
+            this.moreExist = data.exist    
+          },
+          error => {
+            console.log("error occured")
+          })
+        }
 }

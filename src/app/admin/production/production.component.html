@@ -1,45 +1,55 @@
 
 <app-header></app-header> 
 
-<div class="container-fluid">
-    <div class="row">
-<div class="dv-sidebr">
+<div class="">
+    <div class="row dv-row-dshbrd">
+<div class="col-md-2 dv-sidebr">
 
 <app-sidebar></app-sidebar>
 
 </div>
-<div class="dv-mainapp">
-    <div class="container-fluid">
+<div class="col-md-10 dv-mainapp">
+    <div class="">
         <!-- CONTENT -->
         <div class="row">
           <div class="dv-headr">
-              Prime Mover
+              Production
           </div>
             <div class="dv-frm">
               <form [formGroup]="detailForm" (ngSubmit)="submitForm(detailForm.value)">
                
                 <div class="adddata">      
-                <div class="container">
+                <div class="">
                     <div class="row">
                         <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Name of Prime Mover <small>*</small></label>
-                                <select type="number" class="form-control" formControlName="FarmerId">
-                                  <option value="">-- Select a Farmer --</option>
-                                  <option value={{farmer.id}} *ngFor="let farmer of farmerList">
-                                        {{farmer.fullName}}
-                                  </option>
-                                </select>   
-                            </div>
+                          <div class="form-group">
+                            <label>Select Crop <small>*</small></label>
+                            <select  type="number" class="form-control" formControlName="CropId">
+                              <option value="">-- Select a Crop --</option>
+                              <option value={{crop.id}} *ngFor="let crop of cropList">
+                                {{crop.cropName}}
+                              </option>
+                            </select>
+                          </div>
                         </div>
             
                         <div class="col-md-4">
-                            <div class="form-group">
-                              <label>Grain Production<small>*</small></label>
-                                <input class="form-control" type="number" min="0"  formControlName="GrainProduction">
-                            </div>
+                          <div class="form-group">
+                            <label>Name of Prime Mover <small>*</small></label>
+                            <select type="number" class="form-control" formControlName="FarmerId">
+                              <option value="">-- Select a Farmer --</option>
+                              <option value={{farmer.id}} *ngFor="let farmer of farmerList">
+                                    {{farmer.fullName}}
+                              </option>
+                            </select>   
                         </div>
-                        <div class="col-md-4"></div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label>Grain Production<small>*</small></label>
+                              <input class="form-control" type="number" min="0"  formControlName="GrainProduction">
+                          </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
@@ -72,6 +82,7 @@
             <table class="table" >
               <thead>
                 <tr>
+                  <th scope="col">Crop</th>
                   <th scope="col">Farmer</th>
                   <th scope="col">GrainProduction</th>
                   <th scope="col">StrawProduction</th>
@@ -81,7 +92,8 @@
               </thead>
               <tbody >
                 <tr *ngFor="let tddata of TableData">
-                  <td>{{getValue(tddata.farmerid,'farmer')}}</td>
+                  <td>{{tddata.farmerDetail.crop.cropName}}</td>
+                  <td>{{tddata.farmerDetail.fullName}}</td>
                   <td>{{tddata.grainProduction}}</td>
                   <td>{{tddata.strawProduction}}</td>
                   <td>{{tddata.price}}</td>
@@ -92,6 +104,11 @@
                 
               </tbody>
             </table>
+            <div>
+              <button (click)="viewMore('front')" [disabled] = "!moreExist" style="float: right;" class="fa fa-arrow-circle-right" aria-hidden="true"></button>
+              <button (click)="viewMore('back')"  [disabled] = "take == 1" style="float: right;" class="fa fa-arrow-circle-left" aria-hidden="true"></button>
+           
+            </div>
           </div>
          
       </div>
