@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class HeaderComponent implements OnInit {
   errorMessage: string = null
   token: string = null
   userCreatd: string = null
-  constructor(private fb: FormBuilder, private adminService: AdminService) { }
+  constructor(private router: Router, private fb: FormBuilder, private adminService: AdminService) { }
 
   ngOnInit() {
     this.initilizeForm()
@@ -75,5 +76,8 @@ export class HeaderComponent implements OnInit {
       window.location.reload()
 
   }
-
+  toComponent(){
+    this.router.navigate(['/admin/dashboard']);
+  }
+ 
 }

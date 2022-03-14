@@ -10,7 +10,12 @@
     margin: 8px; font-size: 15px;}
 .navbar a {cursor: pointer;}
 .dv-navbar{margin-bottom: 0px; border: none;}
-.toggle-bar{float: left; color: white;display: none;}
+
 @media  (max-width:600px) { 
-    .toggle-bar{  display: inline-block;margin-top: 17px;}
+    .dv-navbar{display: none}
 }
+@media (min-width:600px) {
+    .dv-nvbr-mbile {display: none !important;}
+}
+.dv-nvbr-mbile li{ color: white;padding: 10px;border-top:1px solid #192541}
+.dv-nvbr-mbile li :hover{background: #1f2c4c}
